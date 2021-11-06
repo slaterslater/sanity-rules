@@ -11,3 +11,14 @@ export const maxSize = async (image, max = 100) => {
   console.log(type, size, 'KB')
   return size <= max || `current image is ${Math.ceil(size)}KB and must not exceed ${max}KB` 
 }
+
+export const isSlug = (str, options = null) => {
+  const slash = str.startsWith('/')
+  const isStartOK = options?.leadingSlash ? slash : !slash
+  const isBodyOK = str.match(/[\s]/g) === null
+  if (isStartOK && isBodyOK) return true
+  let errors = []
+  if (!isStartOK) errors.push(`leading slash ${ !slash ? 'is missing' : '' }`)
+  if (!isBodyOK) errors.push('illegal characters')
+  return errors.join(' and ')
+}

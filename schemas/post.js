@@ -1,4 +1,4 @@
-import { maxSize } from "../rules"
+import { maxSize, isSlug } from "../rules"
 
 export default {
   name: 'post',
@@ -20,9 +20,10 @@ export default {
       },
     },
     {
-      name: 'author',
-      title: 'Author',
+      name: 'path',
+      title: 'Path',
       type: 'string',
+      validation: Rule => Rule.custom(string => isSlug(string, {leadingSlash: true}))
     },
     {
       name: 'mainImage',
